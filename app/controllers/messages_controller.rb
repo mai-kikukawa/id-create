@@ -1,10 +1,27 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: [:edit, :update, :destroy]
-  
+  before_action :set_message, only: [:show, :edit, :update, :destroy]
+
   def index
+    @message = Message.all
+  end
+  
+  def new
     @message = Message.new
-    # Messageを全て取得する。
-    @messages = Message.all
+  end
+  
+  def show
+  end
+
+  def create
+    user_id = current_user.id
+    @message = Message.new(message_params)
+    if @message.save
+      redirect_to @user , notice: 'リクエストを保存しました'
+    else
+      # リクエストが保存できなかった時
+      flash.now[:alert] = "リクエストの保存に失敗しました。"
+      render 'new'
+    end
   end
 
   def edit
@@ -20,30 +37,21 @@ class MessagesController < ApplicationController
     end
   end
   
-  def create
-    @message = Message.new(message_params)
-    if @message.save
-      redirect_to root_path , notice: 'リクエストを保存しました'
-    else
-      # リクエストが保存できなかった時
-      @messages = Message.all
-      flash.now[:alert] = "リクエストの保存に失敗しました。"
-      render 'index'
-    end
-  end
-  
   def destroy
     @message.destroy
-    redirect_to root_path, notice: 'メッセージを削除しました'
+    redirect_to [@user, @message], notice: 'メッセージを削除しました'
   end
 
   private
   def message_params
     params.require(:message).permit(:tipe, :media, :start, :finish, :rink)
   end
-  
+
   def set_message
     @message = Message.find(params[:id])
   end
-
+  
+  def user_params
+    params.require(:user)
+  end
 end

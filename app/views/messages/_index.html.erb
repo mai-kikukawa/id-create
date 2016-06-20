@@ -28,7 +28,11 @@
   
 </div>
 
+<%= link_to "新規作成", new_message_path(current_user) %>
+
 
 <% #部分テンプレートを読み込んでいる %>
-<%= render 'form' %>  
+<%#= render 'messages/form' %>
+
+<%= debug @message %>
 
