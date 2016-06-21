@@ -32,6 +32,8 @@
   </div>
   
 </div>
-<%= link_to "新規リンクの作成", new_message_path(@user) %>
+<div class="form-group sub_btn">
+<span class="btn btn-primary", class="text-muted"><%= link_to "新規リクエストの作成" , new_message_path(@user), :class => "label label-primary" %></span>
 
+</div>
 <%= debug @message %>
