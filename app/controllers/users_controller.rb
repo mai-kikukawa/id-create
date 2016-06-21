@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  #before_action :logged_in_user, expect[:new, :create]
 
   def index
     @users = User.all
@@ -6,7 +7,7 @@ class UsersController < ApplicationController
   
   def show 
     @user = User.find(params[:id])
-    @messages = Message.all
+    @messages = Message.where(user_id: "#{@user.id}")
   end
   
   def new

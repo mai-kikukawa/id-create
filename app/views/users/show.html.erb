@@ -3,4 +3,35 @@
   <%= current_user.name %>
 </h1>
 
-<%= render 'messages/index' %>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    リクエスト一覧
+  </div>
+  
+  <div class="panel-heading">
+    <div class="col-sm-1">広告種別</div>
+    <div class="col-sm-1">媒体種別</div>
+    <div class="col-sm-1">開始日</div>
+    <div class="col-sm-1">終了日</div>
+    <div class="col-sm-7">リンク先URL</div>
+    <br>
+  </div>
+    
+  <div class="panel-body">
+			<% @messages.each do |message| %>
+			  <div class="col-sm-1"><%= message.tipe %></div>
+			  <div class="col-sm-1"><%= message.media %></div>
+			  <div class="col-sm-1"><%= message.start %></div>
+			  <div class="col-sm-1"><%= message.finish %></div>
+			  <div class="col-sm-7"><%= message.rink %></div>
+        <div class="col-sm-1">
+              <span class="btn btn-success", class="text-muted"><%= link_to "edit" , edit_message_path(message) %></span>
+              <span class="btn btn-danger", class="text-muted"><%= link_to "destroy" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' } %></span>
+            </div>
+      <% end %>
+  </div>
+  
+</div>
+<%= link_to "新規リンクの作成", new_message_path(@user) %>
+
+<%= debug @message %>

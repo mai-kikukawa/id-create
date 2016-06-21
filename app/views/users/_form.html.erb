@@ -18,7 +18,7 @@
       <%= f.submit class: "btn btn-large btn-primary" %>
       
       <% if @path.is('users#edit') %>
-        <%= link_to 'ユーザーを削除する', { method: :delete, data: {confirm: '削除してよろしいですか？'} } %>
+        <%= link_to 'ユーザーを削除する', user_path(current_user), { method: :delete, data: {confirm: '削除してよろしいですか？'} } %>
       <% end %>
     <% end %>
   </div>

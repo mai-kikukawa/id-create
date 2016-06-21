@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Microposts</title>
+    <title>ID Create</title>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
@@ -14,6 +14,8 @@
     <% end %>
       <%= yield %>
       <%= debug  params if Rails.env.development? %>
+      <%= debug  @user if Rails.env.development? %>
+      <%= debug  @messages if Rails.env.development? %>
     </div>
   </body>
 </html>

@@ -9,9 +9,8 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      get :messages
+      resources :messages
     end
   end
-  resources :messages
   resources :sessions, only: [:new, :create, :destroy]
 end
