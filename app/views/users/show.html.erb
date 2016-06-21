@@ -25,15 +25,13 @@
 			  <div class="col-sm-1"><%= message.finish %></div>
 			  <div class="col-sm-7"><%= message.rink %></div>
         <div class="col-sm-1">
-              <span class="btn btn-success", class="text-muted"><%= link_to "edit" , edit_message_path(message) %></span>
-              <span class="btn btn-danger", class="text-muted"><%= link_to "destroy" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' } %></span>
-            </div>
+          <%= link_to "編集" , edit_message_path(message), :class => "btn btn-success" %>
+          <%= link_to "削除" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>    
+        </div>
       <% end %>
   </div>
   
 </div>
-<div class="form-group sub_btn">
-<span class="btn btn-primary", class="text-muted"><%= link_to "新規リクエストの作成" , new_message_path(@user), :class => "label label-primary" %></span>
 
-</div>
+<%= link_to "新規リクエストの作成" , new_message_path(@user), :class => "btn btn-primary" %>
 <%= debug @message %>
