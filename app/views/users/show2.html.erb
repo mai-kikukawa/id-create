@@ -5,37 +5,33 @@
 
 <div class="panel panel-info">
   <div class="panel-heading">
-    リクエスト一覧
+    生成ID一覧
   </div>
   
   <div class="panel-heading">
     <div class="col-sm-1">広告種別</div>
-    <div class="col-sm-1">媒体種別</div>
-    <div class="col-sm-1">開始日</div>
-    <div class="col-sm-1">終了日</div>
-    <div class="col-sm-6">リンク先URL</div>
-    <div class="col-sm-1">発行ID</div>
+    <div class="col-sm-8">生成URL</div>
+    <div class="col-sm-2">発行ID</div>
     <br>
   </div>
     
   <div class="panel-body">
 			<% @messages.each do |message| %>
 			  <div class="col-sm-1"><%= message.tipe %></div>
-			  <div class="col-sm-1">
-			    <% if message.media == '1' %>
-			     <%= "yahoo" %>
+			  <div class="col-sm-8">
+			  	<% if message.media == '1' %>
+			     <% a= "yho_" %>
 			    <% elsif message.media =='2'%>
-			     <%= "google"%>
+			     <% a="gle_"%>
 			    <% elsif message.media =='3'%>
-			     <%= "楽天"%>
+			     <% a= "rku_" %>
 			    <% elsif message.media =='4'%>
-			     <%= "Amazon"%>
+			     <% a="ama_" %>
 			    <% end %>
-			   </div>
-			  <div class="col-sm-1"><%= message.start %></div>
-			  <div class="col-sm-1"><%= message.finish %></div>
-			  <div class="col-sm-6"><%= message.rink %></div>
-			  <div class="col-sm-1">
+			    <% message.createdurl = message.rink + "?" + a + message.id.to_s %>
+			    <%= message.createdurl %>
+			  	</div>
+			  <div class="col-sm-2">
 			    <% if message.media == '1' %>
 			     <% a= "yho_" %>
 			    <% elsif message.media =='2'%>
@@ -45,18 +41,19 @@
 			    <% elsif message.media =='4'%>
 			     <% a="ama_" %>
 			    <% end %>
-			    
-			    <%= a + message.id.to_s %>
-
-			    </div>
+			    <% message.createdid = a + message.id.to_s %>
+			    <%= message.createdid %>
+				</div>
         <div class="col-sm-1">
-          <%= link_to "編集" , edit_message_path(message), :class => "btn btn-success" %>
           <%= link_to "削除" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>    
         </div>
       <% end %>
   </div>
   
 </div>
+<p>
+  Download:
+  <%= link_to "CSV", messages_path(format: "csv") %>
+</p>
 
-<%= link_to "新規リクエストの作成" , new_message_path(@user), :class => "btn btn-primary" %>
 <%= debug @message %>

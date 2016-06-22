@@ -3,6 +3,11 @@ class MessagesController < ApplicationController
 
   def index
     @messages = Message.all
+    @messages = Message.includes(:manufacture)
+    respond_to do |format|
+      format.html
+      format.csv { send_data @messages.to_csv }
+    end
   end
   
   def show

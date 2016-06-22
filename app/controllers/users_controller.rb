@@ -10,6 +10,11 @@ class UsersController < ApplicationController
     @messages = Message.where(user_id: "#{@user.id}")
   end
   
+  def show2 
+    @user = User.find(params[:id])
+    @messages = Message.where(user_id: "#{@user.id}")
+  end
+  
   def new
     @user = User.new
   end
