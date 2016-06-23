@@ -26,6 +26,15 @@ class Message < ActiveRecord::Base
   def self.csv_column_names
     ["ID", "広告種別", "媒体種別", "出稿開始日", "出稿終了日","リンク先URL","生成URL","発行ID"]
   end
+  
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << csv_column_names
+      all.each do |message|
+        csv << message.csv_column_values
+      end
+    end
+  end
 
   def csv_column_values
     [id, tipe, media, start, finish, rink, createdurl, createdid]
