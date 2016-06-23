@@ -13,5 +13,8 @@ Rails.application.routes.draw do
       get :created
     end
   end
+  resources 'messages', only: :index do
+    collection { post :import }
+  end
   resources :sessions, only: [:new, :create, :destroy]
-end
+  end

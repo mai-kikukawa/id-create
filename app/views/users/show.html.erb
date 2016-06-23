@@ -45,4 +45,9 @@
 </div>
 
 <%= link_to "新規リクエストの作成" , new_message_path(@user), :class => "btn btn-primary" %>
+<%= form_tag import_messages_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "インポート" %>
+<% end %>
+
 <%= debug @message %>

@@ -21,6 +21,12 @@ class UsersController < ApplicationController
     end
   end
   
+  def import
+  # fileはtmpに自動で一時保存される
+  Message.import(params[:file])
+  redirect_to root_url, notice: "リクエストを追加しました。"
+  end
+  
   def new
     @user = User.new
   end
