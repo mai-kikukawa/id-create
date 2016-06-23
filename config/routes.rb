@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       resources :messages
-      get :show2
+      get :created
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
