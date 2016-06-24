@@ -28,7 +28,8 @@
 			    <% elsif message.media =='4'%>
 			     <% a="ama_" %>
 			    <% end %>
-			    <% message.createdurl = message.rink + "?" + a + message.id.to_s %>
+			    <% b = message.rink + "?" + a + message.id.to_s %>
+			    <% message = Message.new(createdurl: b) %>
 			    <%= message.createdurl %>
 			  	</div>
 			  <div class="col-sm-2">
@@ -41,10 +42,12 @@
 			    <% elsif message.media =='4'%>
 			     <% a="ama_" %>
 			    <% end %>
-			    <% message.createdid = a + message.id.to_s %>
+			    <% b = a + message.id.to_s %>
+			    <% message = Message.new(createdid: b) %>
 			    <%= message.createdid %>
 				</div>
         <div class="col-sm-1">
+        	<%= link_to "隠す" , message_path(current_user) , method: :delete, data: { confirm: '隠してもよろしいですか？' }, :class => "btn btn-danger" %>
           <%= link_to "削除" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>    
         </div>
       <% end %>
