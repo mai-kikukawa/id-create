@@ -22,13 +22,13 @@
 			<% @messages.each do |message| %>
 			  <div class="col-sm-1"><%= message.tipe %></div>
 			  <div class="col-sm-1">
-			    <% if message.media == '1' %>
+			    <% if message.media == "yahoo" %>
 			     <%= "yahoo" %>
-			    <% elsif message.media =='2'%>
+			    <% elsif message.media == "google" %>
 			     <%= "google"%>
-			    <% elsif message.media =='3'%>
+			    <% elsif message.media == "楽天" %>
 			     <%= "楽天"%>
-			    <% elsif message.media =='4'%>
+			    <% elsif message.media == "Amazon" %>
 			     <%= "Amazon"%>
 			    <% end %>
 			   </div>

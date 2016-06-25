@@ -19,32 +19,10 @@
 			<% @messages.each do |message| %>
 			  <div class="col-sm-1"><%= message.tipe %></div>
 			  <div class="col-sm-8">
-			  	<% if message.media == '1' %>
-			     <% a= "yho_" %>
-			    <% elsif message.media =='2'%>
-			     <% a="gle_"%>
-			    <% elsif message.media =='3'%>
-			     <% a= "rku_" %>
-			    <% elsif message.media =='4'%>
-			     <% a="ama_" %>
-			    <% end %>
-			    <% b = message.rink + "?" + a + message.id.to_s %>
-			    <% message = Message.new(createdurl: b) %>
-			    <%= message.createdurl %>
+			    <%= set_url(message) %>
 			  	</div>
 			  <div class="col-sm-2">
-			    <% if message.media == '1' %>
-			     <% a= "yho_" %>
-			    <% elsif message.media =='2'%>
-			     <% a="gle_"%>
-			    <% elsif message.media =='3'%>
-			     <% a= "rku_" %>
-			    <% elsif message.media =='4'%>
-			     <% a="ama_" %>
-			    <% end %>
-			    <% b = a + message.id.to_s %>
-			    <% message = Message.new(createdid: b) %>
-			    <%= message.createdid %>
+					<%= publish_id(message) %>
 				</div>
         <div class="col-sm-1">
         	<%= link_to "隠す" , message_path(current_user) , method: :delete, data: { confirm: '隠してもよろしいですか？' }, :class => "btn btn-danger" %>

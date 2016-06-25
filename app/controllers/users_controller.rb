@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include CreatedHelper
   #before_action :logged_in_user, expect[:new, :create]
 
   def index
