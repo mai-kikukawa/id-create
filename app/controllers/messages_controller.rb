@@ -16,9 +16,18 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
+    @message.save
+
+    if @message.save
+    else
+      render 'new'
+    end
+
     @message.createdurl = set_url(@message)
     @message.createdid = publish_id(@message)
-    if @message.save
+    @message.update(message_params)
+    
+    if @message.update(message_params)
       redirect_to root_path, notice: 'リクエストを保存しました'
     else
       # リクエストが保存できなかった時
