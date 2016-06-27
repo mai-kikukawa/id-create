@@ -8,17 +8,18 @@ class UsersController < ApplicationController
   
   def show 
     @user = User.find(params[:id])
-    @messages = Message.where(user_id: "#{@user.id}")
+    @messages = Message.where(user_id: current_user.id)
 
   end
   
   def created 
     @user = User.find(params[:id])
-    @messages = Message.where(user_id: "#{@user.id}")
+    @messages = Message.where(user_id: current_user.id)
+    @output_messages = Message.where(user_id: "#{@user.id}")
     respond_to do |format|
       format.html
-      format.csv { send_data @messages.to_csv }
-      format.xls { send_data @messages.to_csv(col_sep: "\t") }
+      format.csv { send_data @output_messages.to_csv }
+      format.xls { send_data @output_messages.to_csv(col_sep: "\t") }
     end
   end
   

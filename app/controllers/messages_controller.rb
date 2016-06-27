@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  include CreatedHelper
+  
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -14,6 +16,8 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
+    @message.createdurl = set_url(@message)
+    @message.createdid = publish_id(@message)
     if @message.save
       redirect_to root_path, notice: 'リクエストを保存しました'
     else
@@ -43,7 +47,7 @@ class MessagesController < ApplicationController
 
   private
   def message_params
-    params.require(:message).permit(:user_id, :tipe, :media, :start, :finish, :rink)
+    params.require(:message).permit(:user_id, :tipe, :media, :start, :finish, :rink, :createdurl, :createdid)
   end
 
   def set_message
