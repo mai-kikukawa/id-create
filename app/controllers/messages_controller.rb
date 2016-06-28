@@ -16,6 +16,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
+    @message.user_id = current_user.id
     @message.save
 
     if @message.save
@@ -29,10 +30,10 @@ class MessagesController < ApplicationController
     
     if @message.update(message_params)
       redirect_to root_path, notice: 'リクエストを保存しました'
-    else
+    #else
       # リクエストが保存できなかった時
-      flash.now[:alert] = "リクエストの保存に失敗しました。"
-      render 'new'
+      #flash.now[:alert] = "リクエストの保存に失敗しました。"
+      #render 'new'
     end
   end
 
@@ -40,9 +41,19 @@ class MessagesController < ApplicationController
   end
   
   def update
+    @message.update(message_params)
+    if @message.update(message_params)
+    else
+      render 'edit'
+    end
+
+    @message.createdurl = set_url(@message)
+    @message.createdid = publish_id(@message)
+    @message.update(message_params)
+
     if @message.update(message_params)
       # 保存に成功した場合はトップページへリダイレクト
-      redirect_to root_path, notice: 'メッセージを編集しました'
+      redirect_to message_path(@message), notice: 'メッセージを編集しました'
     else
       # 保存に失敗した場合は編集画面へ戻す
       render 'edit'
@@ -63,7 +74,7 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
   end
   
-  def user_params
-    params.require(:user)
-  end
+  # def user_params
+  #   params.require(:user)
+  # end
 end

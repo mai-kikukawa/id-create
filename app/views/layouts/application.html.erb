@@ -15,7 +15,7 @@
       <%= yield %>
       <%= debug  params if Rails.env.development? %>
       <%= debug  @user if Rails.env.development? %>
-      <%= debug  @messages if Rails.env.development? %>
+      <%= debug  @messages.order(id: :desc) if Rails.env.development? && @messages%>
     </div>
   </body>
 </html>

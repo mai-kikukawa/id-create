@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
   # 媒体は必須入力
   validates :media , presence: true
   # リンク先URLは必須入力
-  validates :rink , presence: true
+  validates :rink , presence: true, format: /\A#{URI::regexp(%w(http https))}\z/
   
   def self.to_csv
     CSV.generate do |csv|

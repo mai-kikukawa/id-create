@@ -9,10 +9,11 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      resources :messages
+      #resources :messages, only: [:new, :create]
       get :created
     end
   end
+  resources :messages#, only: [:show, :edit, :update, :destroy]
   resources 'messages', only: :index do
     collection { post :import }
   end

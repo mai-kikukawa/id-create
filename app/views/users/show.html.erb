@@ -20,7 +20,6 @@
     
   <div class="panel-body">
 			<% @messages.each do |message| %>
-			  <div class="row">
   			  <div class="col-sm-1"><%= message.tipe %></div>
   			  <div class="col-sm-1">
   			    <% if message.media == "yahoo" %>
@@ -29,8 +28,8 @@
   			     <%= "google"%>
   			    <% elsif message.media == "楽天" %>
   			     <%= "楽天"%>
-  			    <% elsif message.media ==Amazon" %>
-  			     <%= "Amazon"%>
+  			    <% elsif message.media == "Amazon" %>
+  			    <%= "Amazon"%>
   			    <% end %>
   			   </div>
   			  <div class="col-sm-1"><%= message.start %></div>
@@ -38,10 +37,9 @@
   			  <div class="col-sm-7"><%= message.rink %></div>
   			  <div class="col-sm-1">
             <%= link_to "編集" , edit_message_path(message), :class => "btn btn-success" %>
-            <%= link_to "隠す" , message_path(current_user) , method: :delete, data: { confirm: '隠してもよろしいですか？' }, :class => "btn btn-danger" %>
-            <%= link_to "削除" , message_path(current_user) , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>
+            <%= link_to "隠す" , message_path(message) , method: :delete, data: { confirm: '隠してもよろしいですか？' }, :class => "btn btn-danger" %>
+            <%= link_to "削除" , message_path(message) , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>
           </div>
-        </div>
       <% end %>
   </div>
   
@@ -53,4 +51,4 @@
   <%= submit_tag "インポート", :class => "btn btn-primary" %>
 <% end %>
 
-<%= debug @message %>
+<%#= debug @message %>
