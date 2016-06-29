@@ -23,11 +23,18 @@ class UsersController < ApplicationController
     end
   end
   
-  def import
-  # fileはtmpに自動で一時保存される
-  Message.import(params[:file])
-  redirect_to root_url, notice: "リクエストを追加しました。"
+  def sort
   end
+    
+  def import
+    if params[:csv_file].blank?
+      redirect_to(root_path, alert: 'インポートするCSVファイルを選択してください')
+    else
+      num = Message.all.import(params[:csv_file])
+      redirect_to(root_path, notice: "#{num.to_s}件のユーザー情報を追加 / 更新しました")
+    end
+  end
+
   
   def new
     @user = User.new

@@ -40,22 +40,22 @@ class Message < ActiveRecord::Base
     [id, tipe, media, start, finish, rink, createdurl, createdid]
   end
   
-  def self.import(file)
-    spreadsheet = open_spreadsheet(file)
-    header = spreadsheet.row(1)
+  # def self.import(file)
+  #   spreadsheet = open_spreadsheet(file)
+  #   header = spreadsheet.row(1)
 
-    (2..spreadsheet.last_row).each do |i|
-      # {カラム名 => 値, ...} のハッシュを作成する
-      row = Hash[[header, spreadsheet.row(i)].transpose]
+  #   (2..spreadsheet.last_row).each do |i|
+  #     # {カラム名 => 値, ...} のハッシュを作成する
+  #     row = Hash[[header, spreadsheet.row(i)].transpose]
 
-      # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
-      message = find_by(id: row["id"]) || new
-      # CSVからデータを取得し、設定する
-      message.attributes = row.to_hash.slice(*updatable_attributes)
-      # 保存する
-      message.save!
-    end
-  end
+  #     # IDが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
+  #     message = find_by(id: row["id"]) || new
+  #     # CSVからデータを取得し、設定する
+  #     message.attributes = row.to_hash.slice(*updatable_attributes)
+  #     # 保存する
+  #     message.save!
+  #   end
+  # end
 
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
@@ -70,6 +70,42 @@ class Message < ActiveRecord::Base
   # 更新を許可するカラムを定義
   def self.updatable_attributes
     ["tipe", "media", "start", "finish", "rink"]
+  end
+  
+        # CSVファイルの内容をDBに登録する
+  def self.import(file)
+    imported_num = 0
+    # 文字コード変換のためにKernel#openとCSV#newを併用。
+    # 参考: http://qiita.com/labocho/items/8559576b71642b79df67
+    open(file.path, 'r:cp932:utf-8', undef: :replace) do |f|
+      csv = CSV.new(f, :headers => :first_row)
+
+      csv.each do |row|
+        next if row.header_row?
+
+        # CSVの行情報をHASHに変換
+        table = Hash[[row.headers, row.fields].transpose]
+       # 登録済みユーザー情報取得。
+        # 登録されてなければ作成
+        message = find_by(:id => table["id"])
+        if message.nil?
+          message = new
+        end
+
+        # ユーザー情報更新
+        message.attributes = table.to_hash.slice(
+                            *table.to_hash.except(:id, :created_at, :updated_at).keys)
+        message.user_id = current_user.id
+
+        # バリデーションOKの場合は保存
+        if message.valid?
+          message.save!
+          imported_num += 1
+        end
+      end
+    end
+    # 更新件数を返却
+    imported_num
   end
   
 end

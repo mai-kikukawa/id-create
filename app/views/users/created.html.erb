@@ -10,24 +10,41 @@
   
   <div class="panel-heading">
     <div class="col-sm-1">広告種別</div>
-    <div class="col-sm-8">生成URL</div>
-    <div class="col-sm-2">発行ID</div>
+    <div class="col-sm-1">媒体種別</div>
+    <div class="col-sm-1">開始日</div>
+    <div class="col-sm-1">終了日</div>
+    <div class="col-sm-3">リンク先URL</div>
+    <div class="col-sm-3">生成URL</div>
+    <div class="col-sm-1">発行ID</div>
+
     <br>
   </div>
     
   <div class="panel-body">
 			<% @messages.each do |message| %>
-			  <div class="col-sm-1"><%= message.tipe %></div>
-			  <div class="col-sm-8">
-			    <%= set_url(message) %>
-			  	</div>
-			  <div class="col-sm-2">
-					<%= publish_id(message) %>
-				</div>
-        <div class="col-sm-1">
-        	<%= link_to "隠す" , message_path(current_user) , method: :delete, data: { confirm: '隠してもよろしいですか？' }, :class => "btn btn-danger" %>
-          <%= link_to "削除" , message , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>    
-        </div>
+  			  <div class="col-sm-1"><%= message.tipe %></div>
+  			  <div class="col-sm-1">
+  			    <% if message.media == "yahoo" %>
+  			     <%= "yahoo" %>
+  			    <% elsif message.media == "google" %>
+  			     <%= "google"%>
+  			    <% elsif message.media == "楽天" %>
+  			     <%= "楽天"%>
+  			    <% elsif message.media == "Amazon" %>
+  			    <%= "Amazon"%>
+  			    <% end %>
+  			   </div>
+  			  <div class="col-sm-1"><%= message.start %></div>
+  			  <div class="col-sm-1"><%= message.finish %></div>
+  			  <div class="col-sm-3"><%= message.rink %></div>
+
+			  <div class="col-sm-3"><%= message.createdurl %></div>
+			  <div class="col-sm-1"><%= message.createdid %></div>
+
+  			  <div class="col-sm-1">
+            <%= link_to "編集" , edit_message_path(message), :class => "btn btn-success" %>
+            <%= link_to "削除" , message_path(message) , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>
+          </div>
       <% end %>
   </div>
   

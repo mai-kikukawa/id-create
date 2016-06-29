@@ -29,7 +29,7 @@ class MessagesController < ApplicationController
     @message.update(message_params)
     
     if @message.update(message_params)
-      redirect_to root_path, notice: 'リクエストを保存しました'
+      redirect_to current_user, notice: 'リクエストを保存しました'
     #else
       # リクエストが保存できなかった時
       #flash.now[:alert] = "リクエストの保存に失敗しました。"
@@ -53,7 +53,7 @@ class MessagesController < ApplicationController
 
     if @message.update(message_params)
       # 保存に成功した場合はトップページへリダイレクト
-      redirect_to message_path(@message), notice: 'メッセージを編集しました'
+      redirect_to current_user, notice: 'メッセージを編集しました'
     else
       # 保存に失敗した場合は編集画面へ戻す
       render 'edit'

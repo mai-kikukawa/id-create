@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     member do
       #resources :messages, only: [:new, :create]
       get :created
+      get :sort
+      post :import
     end
   end
   resources :messages#, only: [:show, :edit, :update, :destroy]
@@ -19,3 +21,4 @@ Rails.application.routes.draw do
   end
   resources :sessions, only: [:new, :create, :destroy]
   end
+  
