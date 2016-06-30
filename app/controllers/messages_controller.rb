@@ -53,7 +53,7 @@ class MessagesController < ApplicationController
 
     if @message.update(message_params)
       # 保存に成功した場合はトップページへリダイレクト
-      redirect_to current_user, notice: 'メッセージを編集しました'
+      redirect_to current_user, notice: 'リクエストを編集しました'
     else
       # 保存に失敗した場合は編集画面へ戻す
       render 'edit'
@@ -62,7 +62,7 @@ class MessagesController < ApplicationController
   
   def destroy
     @message.destroy
-    redirect_to current_user, notice: 'メッセージを削除しました'
+    redirect_to current_user, notice: 'リクエストを削除しました'
   end
 
   private

@@ -27,14 +27,14 @@ class Message < ActiveRecord::Base
     ["ID", "広告種別", "媒体種別", "出稿開始日", "出稿終了日","リンク先URL","生成URL","発行ID"]
   end
   
-  def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      csv << csv_column_names
-      all.each do |message|
-        csv << message.csv_column_values
-      end
-    end
-  end
+  #def self.to_csv(options = {})
+    #CSV.generate(options) do |csv|
+      #csv << csv_column_names
+      #all.each do |message|
+        #csv << message.csv_column_values
+      #end
+    #end
+  #end
 
   def csv_column_values
     [id, tipe, media, start, finish, rink, createdurl, createdid]
@@ -79,7 +79,7 @@ class Message < ActiveRecord::Base
     # 参考: http://qiita.com/labocho/items/8559576b71642b79df67
     open(file.path, 'r:cp932:utf-8', undef: :replace) do |f|
       csv = CSV.new(f, :headers => :first_row)
-
+      logger.debug f
       csv.each do |row|
         next if row.header_row?
 
@@ -95,7 +95,31 @@ class Message < ActiveRecord::Base
         # ユーザー情報更新
         message.attributes = table.to_hash.slice(
                             *table.to_hash.except(:id, :created_at, :updated_at).keys)
-        message.user_id = current_user.id
+        
+        if message.media == 'yahoo'
+          @extention = "yho_"
+        elsif message.media == 'google'
+          @extention = "gle_"
+        elsif message.media == 'rakuten'
+          @extention = "rku_"
+        elsif message.media == 'Amazon'
+          @extention = "ama_"
+        else
+          @extention = "_error_"
+        end
+        
+        media_id = (Message.last.id += 1).to_s
+        message.createdurl = message.rink + "?" + @extention + media_id
+        message.createdid = @extention + media_id
+        #やりたい処理（現在エラーになる）
+        #message.user_id = current_user.id
+        #message.createdurl = set_url(message)
+        #message.createdid = publish_id(message)
+
+        #実験用データー（生で入るか実験する）        
+        #message.user_id = 7
+        #message.createdurl = "yahoo.co.jp?ama_1"
+        #message.createdid = "ama_1"
 
         # バリデーションOKの場合は保存
         if message.valid?
@@ -107,5 +131,4 @@ class Message < ActiveRecord::Base
     # 更新件数を返却
     imported_num
   end
-  
 end
