@@ -2,11 +2,14 @@ class Message < ActiveRecord::Base
   has_many :messages
   belongs_to :user
   validates :user_id, presence: true
-
   # 媒体は必須入力
   validates :media , presence: true
   # リンク先URLは必須入力
   validates :rink , presence: true, format: /\A#{URI::regexp(%w(http https))}\z/
+  # 日付のバリデーション。手抜きなので、不具合があったら外す。
+  validates :start, :finish, allow_blank: true, 
+            format: { with: /\A20\d{2}\/((02\/[0-2]\d)|((0(2|4|6|9))|(11))\/(([0-2]\d)|(30))|((0(1|3|5|7|8))|(1(0|2)))\/(([0-2]\d)|(3[0-1])))\z/,
+            message: "の日付は半角で[****/**/**]の形式で入力して下さい" }
   
   #def self.to_csv
     #CSV.generate do |csv|
