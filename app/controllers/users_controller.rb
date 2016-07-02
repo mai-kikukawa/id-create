@@ -26,10 +26,10 @@ class UsersController < ApplicationController
     
   def import
     if params[:csv_file].blank?
-      redirect_to(root_path, alert: 'インポートするCSVファイルを選択してください')
+      redirect_to(root_path, alert: 'インポートするファイルを選択してください')
     else
       num = Message.all.import(params[:csv_file])
-      redirect_to(root_path, notice: "#{num.to_s}件のユーザー情報を追加 / 更新しました")
+      redirect_to(current_user, notice: "#{num.to_s}件のユーザー情報を追加 / 更新しました")
     end
   end
 
