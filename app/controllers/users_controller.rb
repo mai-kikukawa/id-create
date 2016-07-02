@@ -22,9 +22,7 @@ class UsersController < ApplicationController
       format.xls { send_data @output_messages.to_csv(col_sep: "\t") }
     end
   end
-  
-  def sort
-  end
+
     
   def import
     if params[:csv_file].blank?
