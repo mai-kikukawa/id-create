@@ -21,7 +21,7 @@ module CreatedHelper
       @extention = "yho_"
     elsif message.media == 'google'
       @extention = "gle_"
-    elsif message.media == '楽天'
+    elsif message.media == 'rakuten'
       @extention = "rku_"
     elsif message.media == 'Amazon'
       @extention = "ama_"

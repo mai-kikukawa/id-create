@@ -28,7 +28,7 @@
   			     <%= "yahoo" %>
   			    <% elsif message.media == "google" %>
   			     <%= "google"%>
-  			    <% elsif message.media == "楽天" %>
+  			    <% elsif message.media == "rakuten" %>
   			     <%= "楽天"%>
   			    <% elsif message.media == "Amazon" %>
   			    <%= "Amazon"%>
@@ -46,6 +46,7 @@
             <%= link_to "削除" , message_path(message) , method: :delete, data: { confirm: '削除してもよろしいですか？' }, :class => "btn btn-danger" %>
           </div>
       <% end %>
+      <%= paginate @messages %>
   </div>
   
 </div>

@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
   include CreatedHelper
-  
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -17,23 +16,13 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     @message.user_id = current_user.id
-    @message.save
-
     if @message.save
+      @message.createdurl = set_url(@message)
+      @message.createdid = publish_id(@message)
+      @message.update(message_params)
+      redirect_to current_user, notice: 'リクエストを保存しました'
     else
       render 'new'
-    end
-
-    @message.createdurl = set_url(@message)
-    @message.createdid = publish_id(@message)
-    @message.update(message_params)
-    
-    if @message.update(message_params)
-      redirect_to current_user, notice: 'リクエストを保存しました'
-    #else
-      # リクエストが保存できなかった時
-      #flash.now[:alert] = "リクエストの保存に失敗しました。"
-      #render 'new'
     end
   end
 
@@ -43,20 +32,12 @@ class MessagesController < ApplicationController
   def update
     @message.update(message_params)
     if @message.update(message_params)
+      @message.createdurl = set_url(@message)
+      @message.createdid = publish_id(@message)
+      @message.update(message_params)
+      redirect_to current_user, notice: 'リクエストを編集しました'
     else
       render 'edit'
-    end
-
-    @message.createdurl = set_url(@message)
-    @message.createdid = publish_id(@message)
-    @message.update(message_params)
-
-    if @message.update(message_params)
-      # 保存に成功した場合はトップページへリダイレクト
-      redirect_to current_user, notice: 'リクエストを編集しました'
-    #else
-      # 保存に失敗した場合は編集画面へ戻す
-      #render 'edit'
     end
   end
   
