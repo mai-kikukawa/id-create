@@ -4,7 +4,7 @@ module CreatedHelper
     url_extention(message)
 
     media_id = message.id.to_s
-    set_url = message.rink + "?" + @extention + media_id
+    set_url = message.rink + "?banner_id=" + @extention + media_id
     set_url
   end
 
