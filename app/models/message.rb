@@ -112,7 +112,7 @@ class Message < ActiveRecord::Base
         end
         
         media_id = (Message.last.id += 1).to_s
-        message.createdurl = message.rink + "?banner_id=" + @extention + media_id
+        message.createdurl = message.rink + '?banner_id=' + @extention + media_id.to_s
         message.createdid = @extention + media_id
         #やりたい処理（現在エラーになる）
         #message.user_id = current_user.id
