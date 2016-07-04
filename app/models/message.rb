@@ -99,7 +99,7 @@ class Message < ActiveRecord::Base
         message.attributes = table.to_hash.slice(
                             *table.to_hash.except(:id, :created_at, :updated_at).keys)
         
-        if message.media == 'yahoo'
+        if message.media == 'Yahoo'
           @extention = "yho_"
         elsif message.media == 'google'
           @extention = "gle_"
