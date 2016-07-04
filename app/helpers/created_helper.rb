@@ -19,7 +19,7 @@ module CreatedHelper
   def url_extention(message)
     if message.media == 'Yahoo'
       @extention = "yho_"
-    elsif message.media == 'google'
+    elsif message.media == 'Google'
       @extention = "gle_"
     elsif message.media == 'rakuten'
       @extention = "rku_"
